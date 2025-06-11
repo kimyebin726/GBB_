@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/png" href="gbb.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024">
+  <title>GBB</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; min-width: 1024px; overflow-x: auto;    }
+
+    body { font-family: 'Pretendard', sans-serif; background: #fff; color: #000; min-width: 1024px; overflow-x: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+   header {
+  background: #000;
+}
+
+.wrapper {
+  width: 1024px;      /* 또는 원하는 픽셀 값 */
+  margin: 0 auto;     /* 가운데 정렬 */
+}
+    @font-face {
+      font-family: 'YoonMyungjo';
+      src:
+        url('fonts/YoonMyungjo-Regular.woff2') format('woff2'),
+        url('fonts/YoonMyungjo-Regular.woff')  format('woff'),
+        url('fonts/YoonMyungjo-Regular.ttf')   format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* 2) 실제 텍스트에 폰트 적용 */
+    .brand-intro .text-container p {
+      font-family: 'YoonMyungjo', serif;
+    }
+.top-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+}
+.top-images img:hover {
+  transform: scale(1.01);
+  filter: brightness(1.1);
+}    .interactive-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;              /* 이미지 간 간격 */
+      padding: 4rem 0;       /* 위/아래 여백 */
+    }
+    /* .fade-in: 화면에 들어오면 opacity 0 → 1 로 페이드인 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* ────────────────────────────────────────────────────────── */
+
+    /* ────────────────────────────────────────────────────────── */
+    /* 3) .interactive-image: 3D 틸트 + 확대 효과 */
+    .interactive-image {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;     /* 최대 가로 폭(원하는 값으로 조정) */
+      margin: 0 auto;        /* 중앙 정렬 */
+      overflow: hidden;
+      perspective: 1200px;   /* 3D 효과 강도 */
+    }
+    .interactive-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease-out;
+    }
+ .brand-intro {
+      background: #000;              /* 검은 배경 */
+      color: #ED7E29;                   /* 흰색 텍스트 */
+      text-align: center;            /* 중앙 정렬 */
+      padding: 11rem 1rem 2rem 1rem;   /* 위쪽 여백(6rem), 좌우 1rem, 아래쪽 2rem */
+    }
+    .brand-intro .text-container {
+      max-width: 1000px;              /* 텍스트 너비 제한 */
+      margin: 0 auto;                /* 화면 가운데 정렬 */
+    }
+    .brand-intro .text-container p {
+      margin: 0 0 1rem 0;            /* 문단 간격: 아래쪽 1rem */
+      line-height: 2;              /* 줄간격 1.8 */
+      font-family: 'YoonMyungjo', serif;/* 요청하신 Noto Serif KR */
+      font-weight: 300;              /* Regular */
+      font-size: 13pt;               /* 31pt 크기 */
+    }
+.header-right {
+  gap: 0.5rem;            /* 아이콘–텍스트 간 간격도 조금 좁힙니다 */
+  font-size: 0.75rem;     /* 텍스트 크기를 0.875rem → 0.75rem으로 축소 */
+}
+
+/* 로그인·장바구니 아이콘 크기 조정 */
+.header-right .icon {
+  width: 16px;            /* 기존 20px → 16px */
+  height: 16px;           /* 기존 20px → 16px */
+}
+
+/* (선택) 아이콘과 텍스트가 너무 붙어 있다면 여유 주기 */
+.header-right a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;           /* 아이콘과 텍스트 사이 */
+}
+
+.header-container {
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+  padding: 1.5rem 3rem 0.5rem; /* 위쪽 padding을 1.5rem로 늘려 상단 여백 확보 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-center img {
+  height: 36px;  /* 원하는 크기로 조절 */
+  width: auto;
+}
+    .icon { width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; filter: none; }
+    .header-left { display: flex; align-items: center; gap: 8px; }
+    .header-left img.search-icon { width: 20px; height: 20px; filter: none; }
+    .header-left input[type=search] { width: 200px; padding: 0.4rem; border: none; border-bottom: 1px solid #fff; background: transparent; color: #fff; font-size: 0.875rem; }
+    .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
+    .header-center img { height: 48px; width: auto; }
+    .header-right { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: #fff; }
+
+    /* Navigation */
+    nav { background: #000; }
+    .nav-container { max-width: 1920px; margin: 0 auto; text-align: center; padding: 0.75rem 0; }
+    .nav-container ul { display: inline-flex; gap: 2.5rem; }
+    .nav-container li { color: #fff; font-size: 0.875rem; letter-spacing: 0.1em; cursor: pointer; transition: opacity .2s; }
+    .nav-container li:hover { opacity: .7; }
+.nav-container ul li:nth-child(5)::after {
+  content: "";
+  display: inline-block;
+  width: 1px;            /* 막대기의 너비 */
+  height: 16px;          /* 막대기의 높이 */
+  background-color: #fff;
+  margin: 0 1.5rem;      /* 양옆 간격 조절 */
+  vertical-align: middle;
+}
+.nav-container ul li a {
+  display: block;
+  0 1.5rem; /* 필요에 따라 조절 */
+  color: inherit;       /* 기존 색상 유지 */
+}
+    /* Hero */
+    .hero { position: relative; height: 75vh; overflow: hidden; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; }
+    .hero .copy { position: absolute; bottom: 10%; left: 5%; color: #fff; max-width: 40%; }
+    .hero .copy h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  font-weight: 400;          /* Regular weight */
+  border-bottom: 1px solid #fff;
+  padding-bottom: 0.2em;
+  transition: border-color 0.3s;
+}
+.hero .copy p { font-size: 1rem; }
+
+.hero .copy h1:hover {
+  border-bottom-color: orange;
+}
+    /* Product Grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 2rem;
+  background-color: #000; /* 전체 배경 검은색 */
+}
+
+/* ─── 2) 카드 컨테이너를 정사각형 비율로 강제 ─── */
+.product-item {
+  position: relative;
+  /* 정사각형을 만들기 위해 aspect-ratio 속성 지정 */
+  aspect-ratio: 1 / 1;   /* 1:1 비율(정사각형) */
+  overflow: hidden;
+  background-color: #000; /* 카드 배경 검은색 */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ─── 3) 이미지가 카드 전체를 덮도록 하고, object-fit으로 잘라내기 ─── */
+.product-item img {
+  position: absolute;
+  inset: 0;              /* top/right/bottom/left 모두 0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* 비율을 유지하며, 카드 영역을 꽉 채움 */
+  transition: transform 0.3s ease;
+}
+
+/* ─── 4) 호버 시 이미지 확대 ─── */
+.product-item:hover img {
+  transform: scale(1.1);
+}
+
+/* ─── 5) 호버 시 카드 부각 효과 ─── */
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── 6) 어두운 오버레이 & 텍스트 등장 ─── */
+.product-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.product-item:hover::before {
+  opacity: 1;
+}
+.product-item .title {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.product-item:hover .title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── 7) 반응형 그리드 ─── */
+@media (max-width: 1200px) {
+  .products { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 800px) {
+  .products { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+  .products { grid-template-columns: 1fr; }
+}
+.features {
+  display: flex;
+  margin: 0;        
+  padding: 0;
+    padding: 4rem 3rem;    
+   background-color: #000;         
+}
+
+.feature {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 기본적으로 캡션은 숨김 */
+.feature .caption {
+  display: none;
+}
+
+.feature:nth-child(2) .caption {
+  display: block;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #fff;
+    text-decoration: underline;
+  /* 기존 2px 에서 6px로 올려서 밑줄을 더 아래로 내림 */
+  text-underline-offset: 6px;
+  /* 선 두께는 그대로 유지 */
+  text-decoration-thickness: 1px;
+}
+
+/* Footer 전체 여백 & 배경 */
+footer {
+  background: #000;
+  padding: 6rem 3rem;   /* 위아래 넉넉히 */
+  color: #fff;
+}
+
+/* 로고 */
+.footer-top .footer-logo {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.footer-top .footer-logo img {
+  height: 64px; /* 원하는 크기 */
+  width: auto;
+}
+
+/* 링크 영역 정렬 */
+.footer-top .footer-links {
+  display: flex;
+  justify-content: space-evenly; /* 네 컬럼을 균등 분배 */
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* 각 컬럼 제목 (col-title) */
+.col-title {
+  font-size: 1rem;
+  font-weight: 400;      /* 레귤러 */
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+/* 리스트 항목 */
+.footer-col ul li {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 100;      /* 레귤러 */
+  color: #fff;            /* 불투명 화이트 */
+}
+
+.footer-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: 3rem 0;
+}
+
+/* 바닥글 (footer-bottom) */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+.footer-bottom .footer-copy {
+  color: #fff;
+  opacity: 0.6;
+}
+.footer-bottom .social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; 
+   margin-right: 20px;            /* 아이콘 간 간격 */
+}
+
+.footer-bottom .social-icons img.footer-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+  #loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  /* ─── 중앙 민들레 이미지 ─────────────────────────────── */
+  .dandelion {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 200px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* ─── 홀씨 기본 스타일 & 애니메이션 ─────────────────── */
+  .seed {
+    position: absolute;
+    top: 40%; left: 50%;
+    width: 30px;
+    transform-origin: center;
+    opacity: 0;
+    animation: flyUp 4s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes flyUp {
+    0% {
+      opacity: 1;
+      transform: translate(0,0) scale(1) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform:
+        translate(var(--dx), var(--dy))
+        scale(0.4)
+        rotate(var(--rot));
+    }
+  }
+
+  /* ─── 실제 콘텐츠 숨기기 ───────────────────────────── */
+  #content {
+    visibility: hidden;
+  }
+</style>
+</head>
+<body><div id="loader">
+  <img src="dandelion.png" class="dandelion" alt="dandelion"/>
+  <!-- JS가 seed.png 요소를 자동으로 추가합니다 -->
+</div><div id="content">
+  <header>
+    <div class="header-container">
+      <div class="header-left">
+        <img class="search-icon" src="b.png" alt="검색">
+        <input type="search" placeholder="검색">
+      </div>
+      <div class="header-center">
+       <a href="index.html" class="logo">
+  <img src="logo.png" alt="GBB">
+</a>
+      </div>
+      <div class="header-right">
+        <a href="#"><img class="icon" src="c.png" alt="로그인">로그인</a>
+        <a href="#"><img class="icon" src="d.png" alt="장바구니">장바구니</a>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-container">
+        <ul>
+          <li>하이주얼리</li><li><a href="jewelry.html">주얼리</a></li><li><a href="watch.html">시계</a></li> <li>액세서리</li>
+          <li>기프트</li><li><a href="brand.html">GBB 소개</a></li><li>새로운 소식</li><li>GBB 컬렉션 히스토리</li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+ <section class="top-images">
+    <img src="1.jpg" alt="상단 이미지 1">
+    <img src="2.jpg" alt="상단 이미지 2">
+    <img src="3.jpg" alt="상단 이미지 3">
+  </section>
+  <section class="brand-intro">
+  <div class="text-container">
+ <br><br><br><br><br><p>샬롬, GBB에 오신 것을 진심으로 환영합니다.<br>
+    GBB는 예수 그리스도의 희생을 기념하고 그 축복을 널리 전하고자 하는 크리스천을 위한 주얼리 브랜드입니다.<br>
+    민들레 홀씨가 퍼지며 새로운 생명을 잉태하듯, 우리의 삶 또한 예수님을 통해 축복받기를 소망하며 GBB를 창립하였습니다.<br>
+    GBB는 GOD BLESS (through) BIN의 약자로,<br>
+    저의 이름 ‘빈(Bin)’을 빌려 모든 이에게 하나님의 축복이 전해지기를 바라는 마음을 담고 있습니다.<br>
+    GBB를 통하여 예수님의 축복을 널리 알리고자 하는 마음으로 이름을 짓게 되었습니다.<br>
+   GBB 주얼리를 통해 사랑하는 이들과 축복을 나누고, 일상 속에서도 예수님과 동행하시기를 바랍니다.<br>
+   <br>하나님께서 당신을 축복합니다.</p><br><br><br><br><br><br><br><br><br><br>
+
+    <!-- 영어 부분 -->
+    <p>Shalom, and a heartfelt welcome to GBB.<br>
+   GBB is a jewelry brand created for Christians who commemorate the sacrifice of Jesus Christ and seek to share<br> His grace with the world.<br>
+   Just as a dandelion’s seed disperses to bring forth new life, we founded GBB in the hope that our own lives—<br>blessed through Christ—might in turn spread blessings.
+<br>
+    'GBB' stands for “God Bless Bin” borrowing my name to express the desire that God’s blessing reach everyone.<br>We pray that, through GBB jewelry, you will share these blessings with your loved ones and walk with Christ <br>in your daily life.<br>
+    <br>GOD BLESS YOU</p><br><br><br><br><br><br><br><br><br><br>
+  </div>
+</section>
+
+  <section class="hero">
+    <img src="a.jpeg" alt="손에 끼워진 반지 이미지">
+    <div class="copy">
+      <h1>GBB, 축복의 문을 열다</h1>
+      <p>당신의 축복의 삶의 여정을 함께할 God Bless Bin의 첫 컬렉션 감상하러 가기</p>
+    </div>
+  </section>
+
+<section class="products">
+  <div class="product-item">
+    <img src="product-thorn-white.jpg" alt="반지">
+    <div class="title">반지</div>
+  </div>
+  <div class="product-item">
+    <img src="product-thorn-gold.jpg" alt="팔찌">
+    <div class="title">팔찌</div>
+  </div>
+  <div class="product-item">
+    <img src="product-thorn-rose.jpg" alt="목걸이">
+    <div class="title">목걸이</div>
+  </div>
+  <div class="product-item">
+    <img src="product-set1.jpg" alt="세트 I">
+    <div class="title">세트 I</div>
+  </div>
+  <div class="product-item">
+    <img src="product-band-necklace.jpg" alt="띠형 목걸이">
+    <div class="title">띠형 목걸이</div>
+  </div>
+  <div class="product-item">
+    <img src="product-brooch.jpg" alt="브로치">
+    <div class="title">브로치</div>
+  </div>
+  <div class="product-item">
+    <img src="product-hairpin.jpg" alt="비녀">
+    <div class="title">비녀</div>
+  </div>
+  <div class="product-item">
+    <img src="product-set2.jpg" alt="세트 II">
+    <div class="title">세트 II</div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <img src="feature-wear.jpg" alt="착용컷">
+    <!-- 캡션 제거 -->
+  </div>
+<div class="feature">
+  <img src="feature-craft.jpg" alt="제작 과정">
+  <a href="jewelry.html" class="caption caption-underline">
+    면류관 반지 컬렉션을 감상해 보세요
+  </a>
+</div>
+</section>
+   <!-- …중략… -->
+
+  <footer>
+    <div class="footer-top">
+      <!-- 1) 로고를 텍스트 대신 img 로 치환 -->
+      <div class="footer-logo">
+        <img src="logo.png" alt="GBB 로고">
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <p class="col-title">GOD BLESS BIN 브랜드 스토리보기</p>
+          <ul>
+            <li>첫번째 컬렉션</li>
+           <li><a href="jewelry.html">주얼리</a></li>
+            <li>목걸이</li>
+            <li>팔찌</li>
+            <li>귀걸이</li>
+            <li><a href="watch.html">시계</a></li>
+            <li>비녀</li>
+            <li>패션웨어</li>
+            <li>선물세트</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="col-title">온라인 서비스</p>
+          <ul>
+            <li>GBB 멤버십 보기</li>
+            <li>결제 방법</li>
+            <li>배송 옵션</li>
+            <li>마이 페이지</li>
+            <li>반품</li>
+            <li>케어 & 서비스</li>
+            <li>Q&A</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="col-title">매장 서비스</p>
+          <ul>
+            <li>근처 매장 찾기</li>
+            <li>매장 방문 예약</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="col-title">GBB</p>
+          <ul>
+            <li>채용 공고</li>
+            <li>법률 성명</li>
+            <li>개인정보처리방침</li>
+            <li>Report to Society</li>
+            <li>위조품 근절</li>
+            <li>재무 실적</li>
+            <li>지속가능연계채권 업데이트</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+ <div class="footer-bottom">
+    <div>Change location and language 한국어 - Korean</div>
+    <div class="social-icons">
+      <!-- 기존 소셜링크들… -->
+      <a href="#" class="instagram"></a>
+      <a href="#" class="facebook"></a>
+      <a href="#" class="youtube"></a>
+      <a href="#" class="linkedin"></a>
+      <a href="#" class="kakao"></a>
+
+      <!-- 새로 추가 -->
+      <a href="#"><img src="e.png" alt="Icon E" class="footer-icon"></a>
+      <a href="#"><img src="f.png" alt="Icon F" class="footer-icon"></a>
+      <a href="#"><img src="g.png" alt="Icon G" class="footer-icon"></a>
+      <a href="#"><img src="h.png" alt="Icon H" class="footer-icon"></a>
+      <a href="#"><img src="i.png" alt="Icon I" class="footer-icon"></a>
+    </div>
+
+  </div>
+  </footer>
+</div><script>
+  (function() {
+    const loader = document.getElementById('loader');
+    const SEED_COUNT = 10;
+
+    for (let i = 0; i < SEED_COUNT; i++) {
+      const seed = document.createElement('img');
+      seed.src = 'seed.png';
+      seed.className = 'seed';
+      const dx  = (Math.random() - 0.5) * 200 + 'px';
+      const dy  = -(150 + Math.random() * 200) + 'px';
+      const rot = (Math.random() - 0.5) * 60 + 'deg';
+      seed.style.setProperty('--dx', dx);
+      seed.style.setProperty('--dy', dy);
+      seed.style.setProperty('--rot', rot);
+      seed.style.animationDelay = (Math.random() * 1.0) + 's';
+      loader.appendChild(seed);
+    }
+
+    window.addEventListener('load', () => {
+      loader.style.transition = 'opacity 0.8s ease';
+      loader.style.opacity = '0';
+      loader.addEventListener('transitionend', () => {
+        loader.remove();
+        document.getElementById('content').style.visibility = 'visible';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
